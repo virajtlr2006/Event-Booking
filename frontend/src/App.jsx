@@ -6,12 +6,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import MyBookings from './pages/MyBookings';
+import Navbar from './Navbar';
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>          {/* ← must wrap everything */}
         <div className="min-h-screen bg-slate-950">
+          <Navbar/>          {/* ← place Navbar here */}
           <Routes>
             <Route path="/events" element={<Events />} />
             <Route path="/create-event" element={<CreateEvent />} />
