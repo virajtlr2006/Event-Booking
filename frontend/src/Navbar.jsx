@@ -56,6 +56,7 @@ export default function Navbar() {
             <div className="hidden items-center gap-1 md:flex">
               {navLink('/events', 'Events')}
               {navLink('/create-event', 'Create Event')}
+              {navLink('/my-events', 'My Events')}
               {navLink('/my-bookings', 'My Bookings')}
             </div>
           )}
@@ -109,6 +110,7 @@ export default function Navbar() {
             {[
               { path: '/events', icon: '🗓️', label: 'Events' },
               { path: '/create-event', icon: '➕', label: 'Create' },
+              { path: '/my-events', icon: '📋', label: 'Mine' },
               { path: '/my-bookings', icon: '🎫', label: 'Bookings' },
               { path: '/profile', icon: '👤', label: 'Profile' },
             ].map(({ path, icon, label }) => (

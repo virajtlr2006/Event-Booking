@@ -18,6 +18,15 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
+export const getEventsByUser = async (req, res) => {
+  try {
+    const events = await Event.find({ userID: req.params.userID });
+    res.json(events);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export const getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);

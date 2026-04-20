@@ -49,6 +49,9 @@ export default function Profile() {
             <button onClick={() => navigate('/events')} className="btn-primary w-full">
               Browse Events
             </button>
+            <button onClick={() => navigate('/my-events')} className="btn-secondary w-full">
+              My Events
+            </button>
             <button onClick={() => navigate('/my-bookings')} className="btn-secondary w-full">
               My Bookings
             </button>
