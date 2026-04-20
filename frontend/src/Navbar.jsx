@@ -11,15 +11,20 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => {
+    if (path === '/events') {
+      return location.pathname === '/events' || location.pathname.startsWith('/events/');
+    }
+    return location.pathname === path;
+  };
 
   const navLink = (path, label) => (
     <button
       onClick={() => navigate(path)}
-      className={`text-sm font-semibold px-3 py-1.5 rounded-lg transition-all ${
+      className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-all ${
         isActive(path)
-          ? 'bg-orange-500/15 text-orange-400'
-          : 'text-slate-400 hover:text-white hover:bg-slate-800'
+          ? 'bg-brand-500/20 text-brand-100'
+          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
       }`}
     >
       {label}
@@ -31,100 +36,98 @@ export default function Navbar() {
   if (hideOn.includes(location.pathname)) return null;
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+    <nav className="sticky top-0 z-50 px-3 pt-3 sm:px-4">
+      <div className="content-wrap glass-card">
+        <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
+          <button
+            onClick={() => navigate('/events')}
+            className="flex shrink-0 items-center gap-2.5"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-base shadow-lg shadow-black/40">
+              ✦
+            </div>
+            <div className="hidden text-left sm:block">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">Event Platform</p>
+              <p className="text-lg font-bold text-white">Evently</p>
+            </div>
+          </button>
 
-        {/* Logo */}
-        <button
-          onClick={() => navigate('/events')}
-          className="flex items-center gap-2.5 shrink-0"
-        >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-sm shadow-lg shadow-orange-900/40">
-            🎟️
-          </div>
-          <span className="text-white font-extrabold text-lg tracking-tight">
-            Evently
-          </span>
-        </button>
-
-        {/* Center nav links */}
-        {user && (
-          <div className="hidden sm:flex items-center gap-1">
-            {navLink('/events', 'Events')}
-            {navLink('/create-event', '+ Create')}
-            {navLink('/my-bookings', 'My Bookings')}
-          </div>
-        )}
-
-        {/* Right side */}
-        <div className="flex items-center gap-2 shrink-0">
-          {user ? (
-            <>
-              <button
-                onClick={() => navigate('/profile')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all ${
-                  isActive('/profile')
-                    ? 'bg-orange-500/15 border border-orange-500/20'
-                    : 'hover:bg-slate-800 border border-transparent'
-                }`}
-              >
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-xs font-extrabold text-white">
-                  {user?.name?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase()}
-                </div>
-                <span className="text-slate-300 text-sm font-semibold hidden sm:block">
-                  {user?.name?.split(' ')[0] ?? 'Profile'}
-                </span>
-              </button>
-              <button
-                onClick={handleLogout}
-                className="text-sm font-semibold text-slate-500 hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-950/30 transition-all border border-transparent hover:border-red-900/40"
-              >
-                Sign out
-              </button>
-            </>
-          ) : (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => navigate('/login')}
-                className="text-sm font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-800 transition-all"
-              >
-                Login
-              </button>
-              <button
-                onClick={() => navigate('/signup')}
-                className="text-sm font-bold bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-400 hover:to-pink-400 text-white px-4 py-2 rounded-xl transition-all shadow-md shadow-orange-900/30"
-              >
-                Sign Up
-              </button>
+          {user && (
+            <div className="hidden items-center gap-1 md:flex">
+              {navLink('/events', 'Events')}
+              {navLink('/create-event', 'Create Event')}
+              {navLink('/my-bookings', 'My Bookings')}
             </div>
           )}
-        </div>
-      </div>
 
-      {/* Mobile bottom nav — only when logged in */}
-      {user && (
-        <div className="sm:hidden flex items-center justify-around border-t border-slate-800/60 px-2 py-2 bg-slate-950/95">
-          {[
-            { path: '/events', icon: '🗓️', label: 'Events' },
-            { path: '/create-event', icon: '➕', label: 'Create' },
-            { path: '/my-bookings', icon: '🎫', label: 'Bookings' },
-            { path: '/profile', icon: '👤', label: 'Profile' },
-          ].map(({ path, icon, label }) => (
-            <button
-              key={path}
-              onClick={() => navigate(path)}
-              className={`flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-all ${
-                isActive(path)
-                  ? 'text-orange-400'
-                  : 'text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              <span className="text-base">{icon}</span>
-              <span className="text-[10px] font-semibold">{label}</span>
-            </button>
-          ))}
+          <div className="flex items-center gap-2">
+            {user ? (
+              <>
+                <button
+                  onClick={() => navigate('/profile')}
+                  className={`flex items-center gap-2 rounded-xl border px-2.5 py-1.5 transition-all ${
+                    isActive('/profile')
+                      ? 'border-brand-300/50 bg-brand-500/15'
+                      : 'border-transparent hover:border-slate-600 hover:bg-slate-800/70'
+                  }`}
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 text-xs font-bold text-white">
+                    {user?.name?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase()}
+                  </div>
+                  <span className="hidden text-sm font-semibold text-slate-200 sm:block">
+                    {user?.name?.split(' ')[0] ?? 'Profile'}
+                  </span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-xl border border-slate-700 px-3 py-1.5 text-sm font-semibold text-slate-300 transition-all hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-300"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigate('/login')}
+                  className="btn-secondary py-2"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="btn-primary py-2"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      )}
+
+        {user && (
+          <div className="flex items-center justify-around border-t border-white/10 px-2 py-2 md:hidden">
+            {[
+              { path: '/events', icon: '🗓️', label: 'Events' },
+              { path: '/create-event', icon: '➕', label: 'Create' },
+              { path: '/my-bookings', icon: '🎫', label: 'Bookings' },
+              { path: '/profile', icon: '👤', label: 'Profile' },
+            ].map(({ path, icon, label }) => (
+              <button
+                key={path}
+                onClick={() => navigate(path)}
+                className={`flex min-w-16 flex-col items-center gap-1 rounded-lg px-3 py-1.5 transition-all ${
+                  isActive(path)
+                    ? 'bg-brand-500/20 text-brand-200'
+                    : 'text-slate-400 hover:bg-slate-800/70 hover:text-slate-200'
+                }`}
+              >
+                <span className="text-sm">{icon}</span>
+                <span className="text-[11px] font-medium">{label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

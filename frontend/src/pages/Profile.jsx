@@ -23,36 +23,36 @@ export default function Profile() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <div className="w-8 h-8 rounded-full border-2 border-orange-500 border-t-transparent animate-spin"></div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="h-9 w-9 rounded-full border-2 border-brand-400 border-t-transparent animate-spin"></div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col items-center gap-5 text-center">
+    <div className="page-shell flex items-center justify-center">
+      <div className="w-full max-w-md">
+        <div className="glass-card flex flex-col items-center gap-5 p-8 text-center">
           <div className="relative">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-3xl font-extrabold text-white shadow-lg shadow-orange-900/40">
+            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-accent-500 text-3xl font-extrabold text-white shadow-lg shadow-black/40">
               {profile?.name?.[0]?.toUpperCase()}
             </div>
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-400 border-2 border-slate-900"></div>
+            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-slate-900 bg-emerald-400"></div>
           </div>
 
           <div>
-            <h2 className="text-xl font-extrabold text-white">{profile?.name}</h2>
-            <p className="text-slate-400 text-sm mt-0.5">{profile?.email}</p>
-            <p className="text-slate-700 text-xs font-mono mt-2 bg-slate-800 px-3 py-1 rounded-lg">{profile?._id}</p>
+            <h2 className="text-2xl font-bold text-white">{profile?.name}</h2>
+            <p className="mt-0.5 text-sm text-slate-300">{profile?.email}</p>
+            <p className="mt-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-1 font-mono text-xs text-slate-400">{profile?._id}</p>
           </div>
 
-          <div className="flex flex-col gap-2.5 w-full mt-1">
-            <button onClick={() => navigate('/events')} className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-400 hover:to-pink-400 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-lg shadow-orange-900/30">
+          <div className="mt-1 flex w-full flex-col gap-2.5">
+            <button onClick={() => navigate('/events')} className="btn-primary w-full">
               Browse Events
             </button>
-            <button onClick={() => navigate('/my-bookings')} className="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold py-3 rounded-xl text-sm transition-colors">
-              My Bookings 🎫
+            <button onClick={() => navigate('/my-bookings')} className="btn-secondary w-full">
+              My Bookings
             </button>
-            <button onClick={handleLogout} className="w-full bg-transparent border border-red-900/60 hover:bg-red-950/40 hover:border-red-700 text-red-400 font-semibold py-3 rounded-xl text-sm transition-all">
+            <button onClick={handleLogout} className="w-full rounded-xl border border-red-500/35 bg-red-500/10 py-3 text-sm font-semibold text-red-300 transition-all hover:bg-red-500/20">
               Sign Out
             </button>
           </div>
